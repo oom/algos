@@ -24,29 +24,29 @@ std::ostream & operator<<( std::ostream & stream, Array const & a )
    return stream << ')';
 }
 
-int dumb(Array const & a, Array const & b, size_t k)
+int dumb( Array const & a, Array const & b, size_t k )
 {
+   if( k >= a.size() + b.size() )
+      return INT_MIN;
+
    Array u(a);
 
-   u.insert(u.end(), b.begin(), b.end());
-   std::sort(u.begin(), u.end());
-
-   if(k >= u.size())
-      return INT_MIN;
+   u.insert( u.end(), b.begin(), b.end() );
+   std::sort( u.begin(), u.end() );
 
    return u[k];
 }
 
-int better(Array const & a, Array const & b, size_t k)
+int better( Array const & a, Array const & b, size_t k )
 {
    size_t i = 0;
    size_t j = 0;
 
-   while(i < a.size() && j < b.size())
+   while( i < a.size() && j < b.size() )
    {
       int val;
 
-      if(a[i] < b[j])
+      if( a[i] < b[j] )
          val = a[i++];
       else
         val = b[j++];
@@ -55,30 +55,24 @@ int better(Array const & a, Array const & b, size_t k)
          return val;
    }
 
-   for(; i < a.size(); ++i)
-   {
-      if( k-- == 0 )
-         return a[i];
-   }
+   if( i+k < a.size() )
+      return a[i+k];
 
-   for(; j < b.size(); ++j)
-   {
-      if( k-- == 0 )
-         return b[j];
-   }
+   if( j+k < b.size() )
+      return b[j+k];
 
    return INT_MIN;
 }
 
-int best(Array const & a, Array const & b, size_t k)
+int best( Array const & a, Array const & b, size_t k )
 {
-   if(k >= a.size() + b.size())
+   if( k >= a.size() + b.size() )
       return INT_MIN;
 
    size_t count = k + 1;
 
    // Consider `count' smallest elements coming from the union of a and b.
-   // l of them come from the first array, count -l come from the second.
+   // acnt of them come from the first array, bcnt=count-acnt come from the second.
 
    // We are trying to determine how many elements come from the first array.
    // This number is within the following range inclusive:
@@ -86,59 +80,58 @@ int best(Array const & a, Array const & b, size_t k)
    size_t end   = std::min(a.size(), count);
 
    // Use binary search to find how many elements come from the first array.
-   while(begin < end)
+   while( begin < end )
    {
-      int l = begin + (end - begin) / 2;
+      // Consider the case when acnt elements come from the first array, bcnt come from the second one.
+      size_t acnt = begin + (end - begin) / 2;
+      size_t bcnt = count - acnt;
 
-      // Consider the case when l elements come from the first array, count-l come from the second one.
-
-      if( l < a.size() && count-l > 0 && a[l] < b[count-l-1] )
+      if( acnt < a.size() && bcnt > 0 && a[acnt] < b[bcnt-1] )
       {
-         // If a[l] < b[count-l-1] we should take more elements from the first array.
-         // In other words we should include a[l] into the k smallest elements.
-         begin = l + 1;
+         // Take more elements from the first array.
+         begin = acnt + 1;
       }
-      else if( l > 0 && count-l < b.size() && a[l-1] > b[count-l] )
+      else if( acnt > 0 && bcnt < b.size() && a[acnt-1] > b[bcnt] )
       {
-         // If b[count-l] < a[l-1] we should take more elements from the second array.
-         end = l - 1;
+         // Take more elements from the second array.
+         end = acnt - 1;
       }
       else
       {
-         begin = l;
+         begin = acnt;
          break;
       }
    }
 
-   if(begin == 0)
-      return b[count-1];
+   if( begin == 0 )
+      return b[count-1]; // all elements from b[]
 
-   if(begin == count)
-      return a[count-1];
+   if( begin == count )
+      return a[count-1]; // all elements from a[]
 
    return std::max(a[begin-1], b[count-begin-1]);
 }
 
-void generate(Array & a, size_t sz)
+void generate( Array & a, size_t sz )
 {
    a.resize(sz);
 
    size_t mod = sz * 2 + 1;
 
-   for(size_t i=0; i<sz; ++i)
+   for( size_t i=0; i<sz; ++i )
       a[i] = rand() % mod;
 
-   std::sort(a.begin(), a.end());
+   std::sort( a.begin(), a.end() );
 }
 
-void test(size_t sz)
+void test( size_t sz )
 {
    Array a, b;
 
-   generate(a, rand() % (sz+1) );
-   generate(b, rand() % (sz+1) );
+   generate( a, rand() % (sz+1) );
+   generate( b, rand() % (sz+1) );
 
-   for(size_t i=0; i<=sz*2+1; ++i)
+   for( size_t i=0; i<=sz*2+1; ++i )
    {
       int x = dumb(a, b, i);
       int y = better(a, b, i);
@@ -156,9 +149,9 @@ int main()
 {
    srand( time(0) );
 
-   for(int i=0; i<10; ++i)
+   for( size_t sz=0; sz<10; ++sz )
    {
-      for(int j=0; j<1000000; ++j)
-         test(i);
+      for( int j=0; j<1000000; ++j )
+         test(sz);
    }
 }
