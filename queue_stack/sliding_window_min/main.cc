@@ -1,26 +1,11 @@
+#include "array.h"
+
 #include <ctime>
 #include <cstddef>
 #include <cstdlib>
 #include <deque>
 #include <vector>
 #include <iostream>
-
-typedef std::vector<int> Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 size_t find_min( int const a[], size_t i, size_t w )
 {
@@ -77,9 +62,7 @@ void init( Array & a, size_t sz )
    a.resize( sz );
 
    for( size_t i=0; i<sz; ++i )
-   {
       a[i] = rand() % ( sz * 2 );
-   }
 }
 
 void test( Array const & a, size_t w )
@@ -101,9 +84,7 @@ void test( size_t sz )
    init( a, sz );
 
    for( size_t w=1; w<=sz; ++w )
-   {
       test( a, w );
-   }
 }
 
 int main()
@@ -111,8 +92,6 @@ int main()
    srand( time(0) );
 
    for( size_t sz=0; sz<=10; ++sz )
-   {
       for( size_t i=0; i<100000; ++i )
          test( sz );
-   }
 }

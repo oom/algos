@@ -15,28 +15,12 @@
  * Complexity: time: O(n*C), space: O(n*C)
  */
 
+#include "array.h"
+
 #include <time.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <vector>
 #include <iostream>
-
-typedef std::vector<size_t> Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 size_t knapsack_dp( Array const & value, Array const & weight, size_t capacity )
 {

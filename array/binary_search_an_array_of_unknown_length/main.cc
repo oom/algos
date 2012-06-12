@@ -1,27 +1,11 @@
+#include "array.h"
+
 #include <time.h>
 #include <stdlib.h>
 
-#include <vector>
 #include <iostream>
 #include <algorithm>
 #include <stdexcept>
-
-typedef std::vector< int > Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 int bsearch(Array const & a, int x)
 {

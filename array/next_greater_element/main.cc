@@ -1,27 +1,22 @@
+#include "array.h"
+
 #include <time.h>
 #include <stdlib.h>
 
 #include <stack>
-#include <vector>
 #include <iostream>
-
-typedef std::vector<int> Array;
 
 Array bruteforce( Array const & a )
 {
    Array result( a.size(), -1 );
 
    for( size_t i=0; i<a.size(); ++i )
-   {
       for( size_t j=i+1; j<a.size(); ++j )
-      {
          if( a[j] > a[i] )
          {
             result[i] = j;
             break;
          }
-      }
-   }
 
    return result;
 }
@@ -29,9 +24,7 @@ Array bruteforce( Array const & a )
 Array smart( Array const & a )
 {
    if( a.empty() )
-   {
       return Array();
-   }
 
    Array result( a.size() );
 
@@ -57,36 +50,19 @@ Array smart( Array const & a )
    return result;
 }
 
-void init( Array & a, size_t size )
+void init( Array & a, size_t sz )
 {
-   a.resize( size );
+   a.resize( sz );
 
-   for( size_t i=0; i<size; ++i )
-   {
-      a[ i ] = rand() % (size * 2);
-   }
+   for( size_t i=0; i<sz; ++i )
+      a[ i ] = rand() % (sz * 2);
 }
 
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
-
-void test( size_t size )
+void test( size_t sz )
 {
    Array a;
 
-   init( a, size );
+   init( a, sz );
 
    Array bf = bruteforce( a );
    Array sm = smart( a );
@@ -97,23 +73,11 @@ void test( size_t size )
    }
 }
 
-void test()
-{
-   size_t const MaxSize = 10;
-   size_t const Rounds  = 100000;
-
-   for( size_t i=0; i<=MaxSize; ++i )
-   {
-      for( size_t r=0; r<Rounds; ++r )
-      {
-         test( i );
-      }
-   }
-}
-
 int main()
 {
    srand( time(0) );
 
-   test();
+   for( size_t sz=0; sz<=10; ++sz )
+      for( size_t i=0; i<100000; ++i )
+         test( sz );
 }

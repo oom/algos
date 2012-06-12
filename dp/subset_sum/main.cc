@@ -1,27 +1,11 @@
+#include "array.h"
+
 #include <time.h>
 #include <stdlib.h>
 
-#include <vector>
 #include <iostream>
 #include <algorithm>
 #include <numeric>
-
-typedef std::vector< int > Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 // the sum of positive elements
 int psum( Array const & a )

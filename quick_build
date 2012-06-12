@@ -1,0 +1,11 @@
+#!/bin/sh
+# call from leaf directory
+
+binary=$PWD
+target=$(basename $binary)
+source=$(dirname $(readlink -f $0))
+build=$(mktemp -d)
+
+trap "rm -rf $build" EXIT INT TERM
+
+cd $build && cmake $source && make $target && find $build -type f -name $target -exec cp {} $binary \;

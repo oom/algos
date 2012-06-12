@@ -1,9 +1,8 @@
+#include "array.h"
+
 #include <time.h>
 #include <stdlib.h>
-#include <vector>
 #include <iostream>
-
-typedef std::vector< int > Array;
 
 struct Range
 {
@@ -20,21 +19,6 @@ struct Range
 
    ssize_t size() const { return end - start; }
 };
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   const char * sep = "";
-
-   stream << '(';
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 void generate( Array & a, size_t size, int maxval )
 {
@@ -169,7 +153,5 @@ int main()
    srand( time(0) );
 
    for( int i=0; i<100000; ++i )
-   {
       test( 5 );
-   }
 }

@@ -1,23 +1,7 @@
-#include <vector>
+#include "array.h"
+
 #include <iostream>
 #include <algorithm>
-
-typedef std::vector< int > Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   const char * sep = "";
-
-   stream << '(';
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 void shift_right( Array & a, size_t i, size_t j )
 {

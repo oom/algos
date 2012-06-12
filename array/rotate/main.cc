@@ -1,25 +1,8 @@
-#include <stdlib.h>
+#include "array.h"
 
 #include <vector>
 #include <iostream>
 #include <algorithm>
-
-typedef std::vector< int > Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 void reverse( int a[], size_t len )
 {
@@ -98,7 +81,7 @@ void init( Array & a, size_t sz )
       a[ i ] = i;
 }
 
-void test( size_t sz )
+bool test( size_t sz )
 {
    Array a;
 
@@ -112,19 +95,24 @@ void test( size_t sz )
       Array prev = a;
 
       rotate_reverse( &a[0], a.size(), i );
-      rotate_reverse( &b[0], b.size(), i );
+      rotate_cycle( &b[0], b.size(), i );
       std::rotate( c.begin(), c.begin() + i, c.end() );
 
       if( a != b || a != c )
       {
          std::cout << prev << " rotate " << i << ":\n" << a << '\n' << b << '\n' << c << std::endl;
-         abort();
+         return false;
       }
    }
+
+   return true;
 }
 
 int main()
 {
    for( size_t sz=0; sz<100; ++sz )
-      test( sz );
+      if( !test( sz ) )
+         return EXIT_FAILURE;
+
+   return EXIT_SUCCESS;
 }

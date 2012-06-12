@@ -1,27 +1,11 @@
+#include "array.h"
+
 #include <time.h>
 #include <stdlib.h>
 
 #include <vector>
 #include <iostream>
-#include <algorithm>
 #include <numeric>
-
-typedef std::vector< int > Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 std::string backtrack(
       std::vector<Array> const & dp, std::string const & a, std::string const & b, size_t i, size_t j )

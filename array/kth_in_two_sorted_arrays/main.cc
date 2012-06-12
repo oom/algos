@@ -1,3 +1,5 @@
+#include "array.h"
+
 #include <time.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -6,23 +8,6 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
-
-typedef std::vector< int > Array;
-
-std::ostream & operator<<( std::ostream & stream, Array const & a )
-{
-   char const * sep = "";
-
-   stream << '[' << a.size() << "](";
-
-   for( size_t i=0; i<a.size(); ++i )
-   {
-      stream << sep << a[i];
-      sep = " ";
-   }
-
-   return stream << ')';
-}
 
 int dumb( Array const & a, Array const & b, size_t k )
 {
@@ -112,7 +97,7 @@ int best( Array const & a, Array const & b, size_t k )
    return std::max(a[begin-1], b[count-begin-1]);
 }
 
-void generate( Array & a, size_t sz )
+void init( Array & a, size_t sz )
 {
    a.resize(sz);
 
@@ -128,8 +113,8 @@ void test( size_t sz )
 {
    Array a, b;
 
-   generate( a, rand() % (sz+1) );
-   generate( b, rand() % (sz+1) );
+   init( a, rand() % (sz+1) );
+   init( b, rand() % (sz+1) );
 
    for( size_t i=0; i<=sz*2+1; ++i )
    {
@@ -150,8 +135,6 @@ int main()
    srand( time(0) );
 
    for( size_t sz=0; sz<10; ++sz )
-   {
       for( int j=0; j<1000000; ++j )
          test(sz);
-   }
 }

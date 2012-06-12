@@ -1,0 +1,8 @@
+add_subdirectory( +1-1-search )
+add_subdirectory( binary_search_an_array_of_unknown_length )
+add_subdirectory( distance_maximizing_problem )
+add_subdirectory( find_minimum_window_containing_a_set )
+add_subdirectory( interleave_array_halves )
+add_subdirectory( kth_in_two_sorted_arrays )
+add_subdirectory( next_greater_element )
+add_subdirectory( rotate )
