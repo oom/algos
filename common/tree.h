@@ -22,6 +22,7 @@ struct Tree
 
 void print( Tree const * root );
 bool fill_rand( Tree * root, int minval, int maxval );
+bool fill_rand_uniq( Tree * root, int minval, int maxval );
 bool fill_rand_bst( Tree * root, int minval, int maxval );
 
 // don't touch pointers in callback

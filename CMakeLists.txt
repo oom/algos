@@ -8,7 +8,7 @@ if( COMMAND cmake_policy )
 endif(COMMAND cmake_policy)
 
 set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Wextra -Wno-long-long -pipe -g -pedantic" )
-#set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2" )
+set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2" )
 
 macro( algos_add_executable _name )
    include_directories( ${common_SOURCE_DIR} )

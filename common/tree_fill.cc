@@ -16,6 +16,24 @@ bool fill_rand( Tree * root, int minval, int maxval )
       fill_rand( root->right, minval, maxval );
 }
 
+bool fill_rand_uniq( Tree * root, RandUnique & rand )
+{
+   if( !root )
+      return true;
+
+   root->data = rand();
+
+   return
+      fill_rand_uniq( root->left, rand ) &&
+      fill_rand_uniq( root->right, rand );
+}
+
+bool fill_rand_uniq( Tree * root, int minval, int maxval )
+{
+   RandUnique rand( minval, maxval );
+   return fill_rand_uniq( root, rand );
+}
+
 static size_t size( Tree const * x )
 {
    if( !x )

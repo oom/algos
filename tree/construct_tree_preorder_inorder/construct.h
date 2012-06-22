@@ -1,0 +1,9 @@
+#ifndef ALGO_TREE_CONSTRUCT_TREE_PREORDER_INORDER_CONSTRUCT_H_INCLUDED
+#define ALGO_TREE_CONSTRUCT_TREE_PREORDER_INORDER_CONSTRUCT_H_INCLUDED
+
+#include "tree.h"
+#include "array.h"
+
+Tree * construct( Array const & preorder, Array const & inorder );
+
+#endif // ALGO_TREE_CONSTRUCT_TREE_PREORDER_INORDER_CONSTRUCT_H_INCLUDED
