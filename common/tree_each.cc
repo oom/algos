@@ -1,11 +1,10 @@
 #include "tree.h"
 #include <vector>
 #include <cstdlib>
-#include <boost/noncopyable.hpp>
 
 typedef std::vector< unsigned int > Cookies;
 
-class Pool : private boost::noncopyable
+class Pool
 {
 public:
    Pool();
@@ -13,6 +12,10 @@ public:
 
    Tree * acquire();
    void reset();
+
+private:
+   Pool( Pool const & );
+   Pool & operator=( Pool const & );
 
 private:
    std::vector< Tree > m_pool;
