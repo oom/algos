@@ -1,0 +1,9 @@
+#ifndef ALGO_TREE_ITERATIVE_TRAVERSALS_POSTORDER_H_INCLUDED
+#define ALGO_TREE_ITERATIVE_TRAVERSALS_POSTORDER_H_INCLUDED
+
+#include "tree.h"
+#include "array.h"
+
+Array postorder( Tree const * tree );
+
+#endif // ALGO_TREE_ITERATIVE_TRAVERSALS_POSTORDER_H_INCLUDED
