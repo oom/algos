@@ -8,4 +8,4 @@ build=$(mktemp -d)
 
 trap "rm -rf $build" EXIT INT TERM
 
-cd $build && cmake $source && make -j 12 $target && find $build -type f -name $target -exec cp {} $binary \;
+cd $build && cmake $source && make -j 12 $target $* && find $build -type f -name $target -exec cp {} $binary \;

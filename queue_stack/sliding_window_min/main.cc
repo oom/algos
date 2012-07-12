@@ -45,7 +45,7 @@ void sliding_min_smart( int const a[], size_t n, size_t w, int b[] )
    {
       b[i-w] = a[q.front()];
 
-      while( !q.empty() && q.front() <= i-w )
+      if( q.front() <= i-w )
          q.pop_front();
 
       while( !q.empty() && a[q.back()] >= a[i] )
