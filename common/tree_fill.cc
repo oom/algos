@@ -56,6 +56,6 @@ bool fill_rand_bst( Tree * root, int minval, int maxval )
    root->data = rand_range( left, right );
 
    return
-      fill_rand_bst( root->left, minval, left - 1 ) &&
-      fill_rand_bst( root->right, right + 1, maxval );
+      fill_rand_bst( root->left, minval, root->data - 1 ) &&
+      fill_rand_bst( root->right, root->data + 1, maxval );
 }
