@@ -7,60 +7,66 @@
 #include <algorithm>
 #include <stdexcept>
 
-int bsearch(Array const & a, int x)
+int bsearch( Array const & a, int x )
 {
-   int l = 0;
-   int u = a.size() - 1;
+   int lo = 0;
+   int hi = a.size() - 1;
 
-   while( l <= u )
+   while( lo <= hi )
    {
-      int m = l + (u-l) / 2;
+      int mid = lo + (hi - lo) / 2;
 
-      if( a[m] == x )
-         return m;
+      if( a[mid] == x )
+         return mid;
 
-      if( a[m] > x )
-         u = m - 1;
+      if( a[mid] > x )
+         hi = mid - 1;
       else
-         l = m + 1;
+         lo = mid + 1;
    }
 
    return -1;
 }
 
-int bsearchUnknownLength(Array const & a, int x)
+int const * at( Array const & a, int idx )
 {
-   int l = 0;
-   int u = 1;
+   try
+   {
+      return &a.at(idx);
+   }
+   catch (std::out_of_range)
+   {
+      return 0;
+   }
+}
 
-   for (;;) {
-      try {
-         if (a.at(u) >= x)
-            break;
+int bsearchUnknownLength( Array const & a, int x )
+{
+   int lo = 0;
+   int hi = 1;
 
-         l = u;
-         u *= 2;
-      }
-      catch (std::out_of_range) {
+   for( ;; )
+   {
+      int const * p = at( a, hi );
+
+      if( p == 0 || *p >= x )
          break;
-      }
+
+      lo = hi;
+      hi *= 2;
    }
 
-   while (l <= u) {
-      int m = l + (u - l) / 2;
+   while( lo <= hi )
+   {
+      int mid = lo + (hi - lo) / 2;
+      int const * p = at( a, mid );
 
-      try {
-         if (a.at(m) == x)
-            return m;
-
-         if (a.at(m) > x)
-            u = m - 1;
-         else
-            l = m + 1;
-      }
-      catch (std::out_of_range) {
-         u = m - 1;
-      }
+      if( p == 0 || *p > x )
+         hi = mid - 1;
+      else if( *p < x )
+         lo = mid + 1;
+      else
+         return mid;
    }
 
    return -1;
@@ -71,9 +77,7 @@ void init( Array & a, size_t size )
    a.resize( size );
 
    for( size_t i=0; i<size; ++i )
-   {
       a[ i ] = rand() % (size * 2);
-   }
 
    std::sort( a.begin(), a.end() );
 }
