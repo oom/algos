@@ -14,28 +14,22 @@ Interval find_min_findow( std::string const & string, std::string const & set )
    size_t found = 0;
 
    for( size_t i=0; i<set.size(); ++i )
-   {
       ++in_set[ set[i] ];
-   }
 
    size_t start = 0;
    size_t end = 0;
 
-   for( size_t start = 0, end = 0; end<string.size(); ++end )
+   for( size_t start = 0, end = 0; end < string.size(); ++end )
    {
       char e = string[end];
 
       if( in_set[e] == 0 )
-      {
          continue;
-      }
 
       ++in_window[e];
 
       if( in_window[e] <= in_set[e] )
-      {
          ++found;
-      }
 
       if( found == set.size() )
       {
