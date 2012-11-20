@@ -26,7 +26,7 @@ Array smart( Array const & a )
    if( a.empty() )
       return Array();
 
-   Array result( a.size() );
+   Array result( a.size(), -1 );
 
    std::stack< size_t > s;
 
@@ -39,12 +39,6 @@ Array smart( Array const & a )
       }
 
       s.push( i );
-   }
-
-   while( !s.empty() )
-   {
-      result[s.top()] = -1;
-      s.pop();
    }
 
    return result;
