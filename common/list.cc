@@ -3,15 +3,19 @@
 
 std::ostream & operator<<( std::ostream & os, List * x )
 {
-   char const * sep = "";
-
    os << '(';
 
-   while( x )
+   if( x )
    {
-      os << sep << x->data;
-      sep = ", ";
-      x = x->next;
+      List * p = x;
+      char const * sep = "";
+
+      do
+      {
+         os << sep << p->data;
+         sep = " ";
+         p = p->next;
+      } while( p && p != x );
    }
 
    return os << ')';

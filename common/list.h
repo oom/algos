@@ -18,14 +18,20 @@ inline List * push_front( List * head, int data )
    return new List( data, head );
 }
 
-inline void destroy( List * x )
+// works for circular lists as well
+inline void destroy( List * a )
 {
-   while( x )
+   if( !a )
+      return;
+
+   List * p = a;
+
+   do
    {
-      List * next = x->next;
-      delete x;
-      x = next;
-   }
+      List * next = p->next;
+      delete p;
+      p = next;
+   } while( p && p != a );
 }
 
 std::ostream & operator<<( std::ostream & os, List * x );
