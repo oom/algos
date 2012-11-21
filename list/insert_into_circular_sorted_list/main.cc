@@ -101,6 +101,8 @@ static void test( size_t sz )
 
 int main()
 {
+   srand( time(0) );
+
    for( int loop = 0; loop < 1000000; ++loop )
       test( 15 );
 }
