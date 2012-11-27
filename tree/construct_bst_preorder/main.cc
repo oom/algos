@@ -1,52 +1,49 @@
 #include "list.h"
 #include "tree.h"
+#include "array.h"
+
 #include <ctime>
 #include <climits>
 #include <cstdlib>
 #include <iostream>
 
-static Tree * make( List *& preorder, int cap )
+static Tree * make( int *& first, int * end, int cap )
 {
-   if( !preorder || preorder->data > cap )
+   if( first == end || *first > cap )
       return 0;
 
-   Tree * root = new Tree( preorder->data );
-   List * p = preorder->next;
+   Tree * root = new Tree( *first++ );
 
-   root->left = make( p, preorder->data );
-   root->right = make( p, cap );
+   root->left = make( first, end, root->data );
+   root->right = make( first, end, cap );
 
-   preorder = p;
    return root;
 }
 
-static Tree * make( List * preorder )
+static Tree * make( Array & order )
 {
-   return make( preorder, INT_MAX );
+   int * first = order.empty() ? 0 : &order[0];
+   return make( first, first + order.size(), INT_MAX );
 }
 
 // -- TEST ---
 
-static void preorder( Tree * root, List *& last )
+static void preorder( Tree * root, Array & order )
 {
    if( !root )
       return;
 
-   last->next = new List( root->data );
-   last = last->next;
-
-   preorder( root->left, last );
-   preorder( root->right, last );
+   order.push_back( root->data );
+   preorder( root->left, order );
+   preorder( root->right, order );
 }
 
-static List * preorder( Tree * root )
+static Array preorder( Tree * root )
 {
-   List base( 0 );
-   List * p = &base;
+   Array ret;
 
-   preorder( root, p );
-
-   return base.next;
+   preorder( root, ret );
+   return ret;
 }
 
 static bool is_equal( Tree * a, Tree * b )
@@ -67,18 +64,17 @@ static void test( Tree * tree )
 {
    fill_rand_bst( tree, -100, 100 );
 
-   List * p = preorder( tree );
-   Tree * copy = make( p );
+   Array order = preorder( tree );
+   Tree * copy = make( order );
 
    if( !is_equal( tree, copy ) )
    {
       print( tree );
-      std::cout << p << std::endl;
+      std::cout << order << std::endl;
       print( copy );
       abort();
    }
 
-   destroy( p );
    delete copy;
 }
 
