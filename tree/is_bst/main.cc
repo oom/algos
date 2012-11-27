@@ -1,4 +1,5 @@
 #include "tree.h"
+#include <ctime>
 #include <cstdlib>
 
 bool isBstImpl( Tree * root, int * min, int * max )
@@ -32,5 +33,6 @@ void test_bst( Tree * root )
 
 int main()
 {
+   srand( time(0) );
    for_each_skel( &test_bst, 16 );
 }
