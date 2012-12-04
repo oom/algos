@@ -4,6 +4,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <cstddef>
+#include <map>
 
 static bool is_sorted( List const * x )
 {
@@ -35,13 +36,29 @@ static List * rand_list( size_t sz, int l, int u )
    return head;
 }
 
+typedef std::map<int, int> Map;
+
+Map map( List * x )
+{
+   Map ret;
+
+   while( x )
+   {
+      ret[ x->data ]++;
+      x = x->next;
+   }
+
+   return ret;
+}
+
 static void test( size_t sz )
 {
    List * x = rand_list( sz, -100, 100 );
+   Map a = map( x );
 
    merge_sort( x );
 
-   if( !is_sorted(x) )
+   if( !is_sorted(x) || a != map(x) )
       abort();
 
    destroy( x );

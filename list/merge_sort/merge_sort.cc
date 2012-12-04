@@ -3,17 +3,16 @@
 // doesn't work if list size <= 1
 static List * find_middle( List * x )
 {
+   if( !x )
+      return 0;
+
    List * slow = x;
-   List * fast = x;
-   bool inc_slow = false;
+   List * fast = x->next;
 
-   while( fast->next != 0 )
+   while( fast && fast->next )
    {
-      if( inc_slow )
-         slow = slow->next;
-
-      fast = fast->next;
-      inc_slow = !inc_slow;
+      fast = fast->next->next;
+      slow = slow->next;
    }
 
    return slow;
@@ -36,6 +35,8 @@ static List * merge( List * x, List * y )
          p->next = y;
          y = y->next;
       }
+
+      p = p->next;
    }
 
    if( x )
