@@ -28,8 +28,7 @@ Tree * flatten( Tree * a )
    Tree * head = flatten( a->left );
    Tree * tail = flatten( a->right );
 
-   a->left = a;
-   a->right = a;
+   glue( a, a );
 
    head = append( head, a );
    head = append( head, tail );
