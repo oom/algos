@@ -23,11 +23,7 @@ Array bruteforce( Array const & a )
 
 Array smart( Array const & a )
 {
-   if( a.empty() )
-      return Array();
-
    Array result( a.size(), -1 );
-
    std::stack< size_t > s;
 
    for( size_t i=0; i<a.size(); ++i )
