@@ -85,6 +85,27 @@ bool contains_all( Array const & array, Tree * a, Tree * b )
    return true;
 }
 
+size_t min_height( Tree * root )
+{
+   if( !root )
+      return 0;
+
+   return 1 + std::min( min_height(root->left), min_height(root->right) );
+}
+
+size_t max_height( Tree * root )
+{
+   if( !root )
+      return 0;
+
+   return 1 + std::max( max_height(root->left), max_height(root->right) );
+}
+
+bool is_balanced( Tree * root )
+{
+   return max_height(root) - min_height(root) <= 1;
+}
+
 static Tree * outer = 0;
 
 void complain( Tree * a, Tree * b, Tree * m )
@@ -117,6 +138,9 @@ void test_inner( Tree * inner )
       complain( outer, inner, m );
 
    if( !contains_all(inorder(m), outer, inner) )
+      complain( outer, inner, m );
+
+   if( !is_balanced(m) )
       complain( outer, inner, m );
 
    delete m;
