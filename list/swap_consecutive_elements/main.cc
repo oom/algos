@@ -1,20 +1,12 @@
 #include "list.h"
-#include "array.h"
-
-#include <cstdlib>
-#include <iostream>
-#include <algorithm>
 
 static List * swap( List * head )
 {
    List base( -1, head );
    List * p = &base;
 
-   while( p )
+   while( p->next && p->next->next )
    {
-      if( !p->next || !p->next->next )
-         break;
-
       List * a = p->next;
       List * b = a->next;
 
@@ -32,6 +24,11 @@ static List * swap( List * head )
 }
 
 // ---- TEST ----
+#include "array.h"
+
+#include <cstdlib>
+#include <iostream>
+#include <algorithm>
 
 static List * create( size_t sz )
 {
@@ -57,7 +54,7 @@ static List * dumb_swap( List * x )
       x = x->next;
    }
 
-   for( size_t i = 0; i+1 < dumb.size(); i += 2 )
+   for( size_t i = 0; i + 1 < dumb.size(); i += 2 )
       std::swap( dumb[i], dumb[i+1] );
 
    destroy( x );
