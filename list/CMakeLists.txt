@@ -1,3 +1,4 @@
+add_subdirectory( clone_rand )
 add_subdirectory( insert_into_circular_sorted_list )
 add_subdirectory( k_group_reverse )
 add_subdirectory( merge_sort )
