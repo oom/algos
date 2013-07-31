@@ -1,9 +1,4 @@
-#include <ctime>
-#include <cstdlib>
-
 #include <stack>
-#include <queue>
-#include <algorithm>
 
 class Queue
 {
@@ -50,6 +45,13 @@ private:
    std::stack< int > m_push;
    std::stack< int > m_pop;
 };
+
+// -- TEST --
+#include <ctime>
+#include <cstdlib>
+
+#include <queue>
+#include <algorithm>
 
 bool rand_action(size_t sz)
 {
