@@ -16,27 +16,27 @@ static int compare( Bolt const & b, Nut const & n )
 template< typename A, typename B >
 static int partition( A * a, int l, int r, B const & b )
 {
-   int p = l - 1;
-   int q = r + 1;
+   int p = l;
+   int q = r;
 
    // invariant:
-   //  (1) a[k] < b  : k <= p
-   //  (2) a[k] > b  : k >= q
-   //  (3) a[k] == b : p < k < i;
-   //  (4) a[k] ?    : i <= k < q
-   for( int i = l; i < q; )
+   //  (1) a[k] < b  : k < p
+   //  (2) a[k] > b  : k > q
+   //  (3) a[k] == b : p <= k < i;
+   //  (4) a[k] ?    : i <= k <= q
+   for( int i = l; i <= q; )
    {
       int c = compare( a[i], b );
 
       if( c < 0 )
-         std::swap( a[++p], a[i++] );
+         std::swap( a[p++], a[i++] );
       else if( c == 0 )
          ++i;
       else
-         std::swap( a[--q], a[i] );
+         std::swap( a[q--], a[i] );
    }
 
-   return q - 1;
+   return p;
 }
 
 static void qsort( Nut * nuts, Bolt * bolts, int l, int r )
