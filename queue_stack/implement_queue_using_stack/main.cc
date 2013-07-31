@@ -39,13 +39,11 @@ private:
    void refill()
    {
       if( m_pop.empty() )
-      {
          while( !m_push.empty() )
          {
             m_pop.push( m_push.top() );
             m_push.pop();
          }
-      }
    }
 
 private:
@@ -58,14 +56,10 @@ bool rand_action(size_t sz)
    static size_t const MaxSize = 100;
 
    if(sz == 0)
-   {
       return true;
-   }
 
    if(sz >= MaxSize)
-   {
       return false;
-   }
 
    return rand() % 2;
 }
@@ -95,8 +89,6 @@ int main()
       }
 
       if( a.empty() != b.empty() || a.size() != b.size() || ( !a.empty() && a.front() != b.front() ) )
-      {
          abort();
-      }
    }
 }
