@@ -42,59 +42,41 @@ Array subset( Array const & a, int sum )
    // The idea is to populate a matrix M where M[i][j] indicates
    // if there exists a subset of a[0]..a[i] which sum equals j.
    // Since indices can't be negative, a[i][0] holds value for n, a[i][1] for n + 1, etc.
-   //
-   // An element can take one of three values:
-   //    NoWay   - there is no subset which sum equals j
-   //    SeeNext - there is a subset which sum equals j but it doesn't include the element a[i]
-   //    UseMe   - there is a subset which sum equals j and it includes the element a[i].
-   int const NoWay   = 0;
-   int const SeeNext = 1;
-   int const UseMe   = 2;
+   std::vector< Array > m( a.size(), Array(p - n + 1, false) );
 
-   std::vector< Array > m( a.size(), Array(p - n + 1, NoWay) );
-
-   m[0][ a[0] - n ] = UseMe;
+   m[0][ a[0] - n ] = true;
 
    for( size_t i = 1; i < a.size(); ++i )
       for( size_t j = 0; j < m[i].size(); ++j )
       {
          int s = n + j - a[i];
 
-         if( a[i] == n + j )
-            m[i][j] = UseMe;
-         else if( m[i - 1][j] != NoWay )
-            m[i][j] = SeeNext;
-         else if( s >= n && s <= p && m[i - 1][s - n] != NoWay )
-            m[i][j] = UseMe;
+         m[i][j] =
+            ( a[i] == n + j ) ||
+            ( m[i - 1][j] )   ||
+            ( s >= n && s <= p && m[i - 1][s - n] );
       }
-
-   Array ret;
 
    int x = a.size() - 1;
    int y = sum;
 
-   while( m[x][y - n] != NoWay )
+   if( !m[x][y - n] )
+      return Array();
+
+   Array ret;
+
+   do
    {
-      if( m[x][y - n] == SeeNext )
-      {
-         --x;
-      }
-      else
-      {
-         ret.push_back( a[x] );
-
-         y -= a[x];
+      while( x > 0 && m[x - 1][y - n] )
          --x;
 
-         if( y == 0 )
-         {
-            std::reverse( ret.begin(), ret.end() );
-            return ret;
-         }
-      }
-   }
+      ret.push_back( a[x] );
+      y -= a[x];
+      --x;
+   } while( y != 0 );
 
-   return Array();
+   std::reverse( ret.begin(), ret.end() );
+   return ret;
 }
 
 Array subset_bruteforce( Array const & a, int sum )
