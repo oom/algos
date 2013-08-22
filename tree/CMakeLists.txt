@@ -1,6 +1,7 @@
 add_subdirectory( construct_bst_preorder )
 add_subdirectory( construct_tree_preorder_inorder )
 add_subdirectory( find_2sum_in_bst )
+add_subdirectory( find_closest_element )
 add_subdirectory( is_bst )
 add_subdirectory( iterative_traversals )
 add_subdirectory( lowest_common_ancestor )
