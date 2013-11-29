@@ -1,53 +1,27 @@
 #include "tree.h"
 #include <algorithm>
 
-Tree const * lower_bound( Tree const * p, int x )
+Tree const * findClosestElement( Tree const * p, int x )
 {
-   Tree const * ret = 0;
+   Tree const * l = 0;
+   Tree const * u = 0;
 
    while( p )
    {
       if( p->data == x )
          return p;
 
-      if( p->data > x )
+      if( p->data < x )
       {
-         p = p->left;
+         l = p;
+         p = p->right;
       }
       else
       {
-         ret = p;
-         p = p->right;
-      }
-   }
-
-   return ret;
-}
-
-Tree const * upper_bound( Tree const * p, int x )
-{
-   Tree const * ret = 0;
-
-   while( p )
-   {
-      if( p->data > x )
-      {
-         ret = p;
+         u = p;
          p = p->left;
       }
-      else
-      {
-         p = p->right;
-      }
    }
-
-   return ret;
-}
-
-Tree const * findClosestElement( Tree const * root, int x )
-{
-   Tree const * l = lower_bound( root, x );
-   Tree const * u = upper_bound( root, x );
 
    if( l && u )
       return std::abs(l->data - x) <= std::abs(u->data - x) ? l : u; // prefer smaller element
@@ -67,7 +41,7 @@ void findClosestElementBruteforce( Tree const * p, int x, Tree const *& candidat
 
    findClosestElementBruteforce( p->left, x, candidate );
 
-   if( std::abs(p->data - x) < std::abs(candidate->data -x) )
+   if( std::abs(p->data - x) < std::abs(candidate->data - x) )
       candidate = p;
 
    findClosestElementBruteforce( p->right, x, candidate );
