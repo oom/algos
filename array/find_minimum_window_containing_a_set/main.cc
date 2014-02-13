@@ -16,9 +16,6 @@ Interval find_min_findow( std::string const & string, std::string const & set )
    for( size_t i=0; i<set.size(); ++i )
       ++in_set[ set[i] ];
 
-   size_t start = 0;
-   size_t end = 0;
-
    for( size_t start = 0, end = 0; end < string.size(); ++end )
    {
       char e = string[end];
