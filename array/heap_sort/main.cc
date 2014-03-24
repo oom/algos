@@ -11,15 +11,14 @@ int right(int p)
    return left(p) + 1;
 }
 
-void sift_down(int a[], int len)
+void sift_down(int a[], int len, int p)
 {
-   int p = 0;
-   int l = left(p);
-   int r = right(p);
-   int max = p;
-
    for (;;)
    {
+      int l = left(p);
+      int r = right(p);
+      int max = p;
+
       if (l < len && a[l] > a[max])
          max = l;
 
@@ -40,7 +39,7 @@ void build_heap(int a[], int len)
       return;
 
    for (int i = len / 2; i >= 0; --i)
-      sift_down(a + i, len - i);
+      sift_down(a, len, i);
 }
 
 void hsort(int a[], int len)
@@ -52,7 +51,7 @@ void hsort(int a[], int len)
 
    for (int i = len - 1; i > 0; --i) {
       std::swap(a[i], a[0]);
-      sift_down(a, i);
+      sift_down(a, i, 0);
    }
 }
 
@@ -71,15 +70,10 @@ bool is_sorted(int a[], int len)
 
 Array make(int len)
 {
-   Array b(2);
-   b[0] = 0;
-   b[1] = 1;
-   return b;
-
    Array a(len);
 
    for (int i = 0; i < len; ++i)
-      a[i] = rand();
+      a[i] = rand() % (len * 2);
 
    return a;
 }
@@ -105,7 +99,7 @@ int main()
    test(0);
    test(1);
 
-   for (int len = 2; len < 20; ++len)
-      for (int loop = 0; loop < 1000000; ++loop)
+   for (int len = 2; len < 200; ++len)
+      for (int loop = 0; loop < 100000; ++loop)
          test(len);
 }
